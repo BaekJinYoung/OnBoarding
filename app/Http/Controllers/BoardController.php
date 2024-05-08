@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Board;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 class BoardController extends Controller
@@ -36,8 +38,13 @@ class BoardController extends Controller
     }
 
     public function show(Board $board){
-        $board->incrementViews();
-        return view('board.show', compact('board'));
+        $user = auth()->user();
+        if ($user->can('view', $board)) {
+            $board->incrementViews();
+            return view('board.show', compact('board'));
+        } else {
+            throw new AuthorizationException('You are not authorized to view this post.');
+        }
     }
 
     public function update(Request $request, Board $board){
