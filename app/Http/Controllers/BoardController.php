@@ -38,13 +38,16 @@ class BoardController extends Controller
     }
 
     public function show(Board $board){
-        $user = auth()->user();
-        if ($user->can('view', $board)) {
-            $board->incrementViews();
-            return view('board.show', compact('board'));
-        } else {
-            throw new AuthorizationException('You are not authorized to view this post.');
-        }
+//        $user = auth()->user();
+//        if ($user->can('view', $board)) {
+//            $board->incrementViews();
+//            return view('board.show', compact('board'));
+//        } else {
+//            throw new AuthorizationException('You are not authorized to view this post.');
+//        }
+
+        $board->incrementViews();
+        return view('board.show', compact('board'));
     }
 
     public function update(Request $request, Board $board){
@@ -57,7 +60,12 @@ class BoardController extends Controller
     }
 
     public function delete(Board $board){
-        $board->delete();
-        return redirect()->route('boards.index', $board)->with('success', '게시물이 성공적으로 삭제되었습니다.');
+        $user = auth()->user();
+        if ($user->can('delete', $board)) {
+            $board->delete();
+            return redirect()->route('boards.index', $board)->with('success', '게시물이 성공적으로 삭제되었습니다.');
+        } else {
+            abort(403, '게시물을 삭제할 권한이 없습니다.');
+        }
     }
 }
