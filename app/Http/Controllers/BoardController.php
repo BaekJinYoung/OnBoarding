@@ -68,7 +68,9 @@ class BoardController extends Controller
         $user = auth()->user();
         if ($user->can('delete', $board)) {
             $board->delete();
-            return redirect()->route('boards.index', $board)->with('success', '게시물이 성공적으로 삭제되었습니다.');
+            session()->flash('success', '게시물이 성공적으로 삭제되었습니다.');
+            // session()->put('success', '게시물이 성공적으로 삭제되었습니다.');
+            return redirect()->route('boards.index', $board);
         } else {
             abort(403, '게시물을 삭제할 권한이 없습니다.');
         }
