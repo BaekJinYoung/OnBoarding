@@ -61,13 +61,13 @@
         </tr>
         </table>
         @endcan
-        <form action="{{route('boards.delete', $board->id)}}" method="post">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">삭제</button>
-        </form>
         <a href="{{route("boards.index")}}">
             <button type="button" class="btn btn-primary">뒤로가기(취소)</button>
         </a>
+    </form>
+    <form action="{{route('boards.delete', $board->id)}}" method="post">
+        @csrf
+        @method('delete')
+        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">삭제</button>
     </form>
 @endsection

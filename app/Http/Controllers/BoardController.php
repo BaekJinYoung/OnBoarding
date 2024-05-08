@@ -51,12 +51,17 @@ class BoardController extends Controller
     }
 
     public function update(Request $request, Board $board){
-        $request = $request->validate([
-            'title' => 'required',
-            'details' => 'required',
-        ]);
-        $board->update($request);
-        return redirect()->route('boards.index',$board);
+        $user = auth()->user();
+        if ($user->can('update', $board)) {
+            $request = $request->validate([
+                'title' => 'required',
+                'details' => 'required',
+            ]);
+            $board->update($request);
+            return redirect()->route('boards.index',$board)->with('success', '게시물이 성공적으로 수정되었습니다.');
+        } else {
+            abort(403, '게시물을 수정할 권한이 없습니다.');
+        }
     }
 
     public function delete(Board $board){
