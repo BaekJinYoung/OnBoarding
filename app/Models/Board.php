@@ -10,7 +10,7 @@ class Board extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'details', 'views'
+        'title', 'details', 'user_id'
     ];
 
     public function incrementViews()

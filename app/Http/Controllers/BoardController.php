@@ -22,13 +22,16 @@ class BoardController extends Controller
         return view('board.create');
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $request = $request->validate([
             'title' => 'required',
-            'details' => 'required'
+            'details' => 'required',
         ]);
-        $this->Board->create($request);
+
+        $user_id = auth()->id();
+        $boardData = array_merge($request, ['user_id' => $user_id]);
+        $this->Board->create($boardData);
+
         return redirect()->route('boards.index');
     }
 
@@ -45,5 +48,4 @@ class BoardController extends Controller
         $board->update($request);
         return redirect()->route('boards.index',$board);
     }
-
 }
