@@ -18,9 +18,9 @@ Route::get('/boards/create', [BoardController::class, 'create'])->name('boards.c
 
 Route::post('/boards/store', [BoardController::class, 'store'])->name('boards.store');
 
-// Route::get('boards/{board}',[BoardController::class, 'show'])->name("boards.show");
-// Route::get('boards/{board}', [BoardController::class, 'show'])->name("boards.show")->middleware('can:view,board');
-Route::get('boards/{board}')->name("boards.show")->middleware(CheckBoardOwnership::class);
+Route::get('boards/{board}',[BoardController::class, 'show'])->name("boards.show");
+//Route::get('boards/{board}', [BoardController::class, 'show'])->name("boards.show")->middleware('can:view,board');
+//Route::get('boards/{board}')->name("boards.show")->middleware(CheckBoardOwnership::class);
 
 Route::patch('boards/{board}', [BoardController::class, 'update'])->name('boards.update');
 
