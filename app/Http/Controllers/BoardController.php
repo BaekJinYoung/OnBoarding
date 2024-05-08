@@ -48,4 +48,9 @@ class BoardController extends Controller
         $board->update($request);
         return redirect()->route('boards.index',$board);
     }
+
+    public function delete(Board $board){
+        $board->delete();
+        return redirect()->route('boards.index', $board)->with('success', '게시물이 성공적으로 삭제되었습니다.');
+    }
 }

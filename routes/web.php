@@ -36,3 +36,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
+
+// 삭제
+Route::delete('/boards/{board}', [BoardController::class, 'delete'])->name('boards.delete');
